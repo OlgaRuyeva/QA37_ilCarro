@@ -18,10 +18,8 @@ public class LoginTests extends TestBase{
         app.getHelperUser().fillLoginForm("oo220719@gmail.com","OO220719!oo");
         app.getHelperUser().submitLoginYalla();
         Assert.assertEquals(app.getHelperUser().isLogged(),"Logged in success");
-
     }
     @Test
-
     public void loginSuccessModel(){
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm("oo220719@gmail.com","OO220719!oo");
@@ -29,13 +27,15 @@ public class LoginTests extends TestBase{
         Assert.assertEquals(app.getHelperUser().isLogged(),"Logged in success");
     }
 
-
-   // @Test
-    //public void LoginWrongEmail(){
-      // app.getHelperUser().openLoginForm();
-      // app.getHelperUser().fillLoginForm("oo220719gmail.com","OO220719!oo");
-      // app.getHelperUser().submitLoginYalla();
-      // Assert.assertTrue(app.getHelperUser().incorrectEmail());    }
+   @Test
+    public void LoginWrongEmail(){
+        app.getHelperUser().openLoginForm();
+        app.getHelperUser().fillLoginForm("oo220719gmail.com","OO220719!oo");
+        app.getHelperUser().submitLoginYalla();
+       Assert.assertTrue(app.getHelperUser().incorrectEmail());
+       app.getHelperUser().fillLoginForm("oo220719@gmail.com","OO220719!oo");
+       app.getHelperUser().submitLoginYalla();
+    }
 
     @Test
     public void LoginWrongPassword(){
