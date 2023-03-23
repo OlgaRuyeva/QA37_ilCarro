@@ -19,6 +19,7 @@ public class ApplicationManager {
         helperUser = new HelperUser(wd);
     }
     public HelperUser getHelperUser() {
+
         return helperUser;
     }
 
