@@ -17,45 +17,36 @@ public class HelperUser extends HelperBase {
     }
 
     public void openLoginForm() {
-        click(By.cssSelector("a[href='/login?url=%2Fsearch']"));//"a[href^='/login']" //"//a[text()=' Log in ']
+        click(By.cssSelector("a[href='/login?url=%2Fsearch']"));
+        //"a[href^='/login']" //"//a[text()=' Log in ']
 
     }
+
     public void fillLoginForm(String email, String password) {
         type(By.id("email"), email);
         type(By.xpath("//input[@id='password']"), password);
+
     }
+
     public void fillLoginForm(User user) {
         type(By.id("email"), user.getEmail());
         type(By.xpath("//input[@id='password']"), user.getPassword());
     }
 
-    public void submit() {
-        //click(By.xpath("//*[text()='Y’alla!']"));
-        click(By.cssSelector("button[type='submit']"));
-    }
     public void closeWindow() {//click when this button is present
         if (isElementPresent(By.xpath("//*[text()='Ok']"))) {
             click(By.xpath("//*[text()='Ok']"));
         }
     }
-    public String getMessage(){
-//        WebElement element = wd.findElement(By.cssSelector(".dialog-container>h2"));
-//        String  text = element.getText();
-//        return text;
-
-        WebDriverWait wait = new WebDriverWait(wd, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOf(wd.findElement(By.cssSelector(".dialog-container"))));
-
-        return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
-     }
 
     public boolean isLoggedFinish() {
-
         return isElementPresent(By.xpath("//*[text()=' Logout ']"));
     }
+
     public void logOut() {
         click(By.xpath("//a[text()=' Logout ']"));
     }
+
     public String getErrorText() {
         String text = wd.findElement(By.cssSelector("div.error")).getText();
         System.out.println(text);
@@ -63,7 +54,7 @@ public class HelperUser extends HelperBase {
         // return wd.findElement(By.cssSelector("div.error")).getText();
     }
 
-    public boolean isYallaButtonNotAktive() {
+    public boolean isYallaButtonNotActive() {
         boolean res = isElementPresent(By.cssSelector("button[disabled]"));
         WebElement element = wd.findElement(By.cssSelector("button[type='submit']"));
         boolean result = element.isEnabled();
@@ -88,8 +79,8 @@ public class HelperUser extends HelperBase {
         click(By.cssSelector("label[for = 'terms-of-use']"));
     }
 
-    public void checkPolicyXY(){
-        if(!wd.findElement(By.id("terms-of-use")).isSelected()) {
+    public void checkPolicyXY() {
+        if (!wd.findElement(By.id("terms-of-use")).isSelected()) {
             Dimension size = wd.manage().window().getSize();
             System.out.println("Wight screen -->" + size.getWidth());
 
@@ -108,5 +99,14 @@ public class HelperUser extends HelperBase {
         }
     }
 
+    public void login(User user) {
+        openLoginForm();
+        fillLoginForm(user);
+        submit();
+        closeWindow();
+
+    }
 
 }
+
+
