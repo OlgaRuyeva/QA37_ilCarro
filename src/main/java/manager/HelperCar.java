@@ -55,9 +55,7 @@ public class HelperCar extends HelperBase {
         typeCity(city);
         click(By.id("dates"));
 
-
-         //*String locatorFrom ="//*[text()=' "+25+" ']";
-        //click (By.xpath(locatorFrom));
+        //click (By.xpath("//*[text()=' 28 ']"));
 
         String[] locatorFrom1 = dateFrom.split("/");
         int dayNumber = Integer.parseInt(locatorFrom1[1]);
@@ -66,6 +64,7 @@ public class HelperCar extends HelperBase {
         dayElement.click();
 
         //click (By.xpath("//*[text()=' 28 ']"));
+
         String[] locatorFrom2 = dateTo.split("/");
         int dayNumber1 = Integer.parseInt(locatorFrom1[1]);
         String locator1 = "//*[text()=' "+dayNumber+" ']";
