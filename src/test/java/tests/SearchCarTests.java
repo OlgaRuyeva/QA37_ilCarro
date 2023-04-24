@@ -27,6 +27,5 @@ public class SearchCarTests extends TestBase {
     }
      @AfterMethod
      public void postConditionBack() {
-         app.getHelperCar().back();
-     }
+        app.getHelperCar().back();  }
 }
