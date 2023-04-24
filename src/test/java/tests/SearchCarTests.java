@@ -20,10 +20,10 @@ public class SearchCarTests extends TestBase {
     }
 @Test
     public void searchAnyPeriodSuccess() {
-        app.getHelperCar().searchAnyPeriod ("Tel Aviv,Israel","4/28/2023","3/11/2024");
+        app.getHelperCar().searchAnyPeriod ("Tel Aviv,Israel","4/28/2023","1/11/2024");
 
         app.getHelperCar().submit();
-        //Assert.assertTrue(app.getHelperCar().isListOfCarAppeared());
+        Assert.assertTrue(app.getHelperCar().isListOfCarAppeared());
     }
      @AfterMethod
      public void postConditionBack() {

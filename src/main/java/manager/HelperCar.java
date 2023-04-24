@@ -132,20 +132,16 @@ public class HelperCar extends HelperBase {
         click(By.xpath("//div[text()= 2024]"));
         pause(1000);
 
-
         String[] to = dateTo.split( "/"); //*[text()=' MAR '] 3/28/24
         String month = to[0];
-        String[] months = {"", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+        String[] months = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
         String FEB = months[Integer.parseInt(month)];
         String locatorTo = "//div[text()=' "+FEB+" ']";
         click(By.xpath(locatorTo));
 
-
         String[] to1 = dateTo.split("/");
         String locatorTo1 = "//*[text()=' "+to1[1]+" ']";
         click(By.xpath(locatorTo1));
-
-
     }
 
     public void back() {
