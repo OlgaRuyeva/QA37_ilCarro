@@ -6,6 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+
 
 public class HelperCar extends HelperBase {
     public HelperCar(WebDriver wd) {
@@ -16,7 +20,6 @@ public class HelperCar extends HelperBase {
         pause(500);
         click(By.xpath("//*[text()=' Let the car work ']"));
     }
-
 
     public void fillCraForm(Car car) {
         typeLocation(car.getLocation());
@@ -39,9 +42,7 @@ public class HelperCar extends HelperBase {
         //select.selectByIndex(5);
         //select.selectByValue("Gas");
         //select.deselectByVisibleText(" Gas ");
-
     }
-
     private void typeLocation(String location) {
         type(By.id("pickUpPlace"),location);
         click(By.cssSelector("div.pac-item"));
@@ -55,28 +56,105 @@ public class HelperCar extends HelperBase {
         typeCity(city);
         click(By.id("dates"));
 
-        //click (By.xpath("//*[text()=' 28 ']"));
+        String[] from = dateFrom.split("/");
+        String locatorFrom = "//*[text()=' "+ from[1]+" ']";
+        click(By.xpath(locatorFrom));
+        pause(2000);
 
-        String[] locatorFrom1 = dateFrom.split("/");
+        String[] to = dateTo.split("/");
+        String locatorTo = "//*[text()=' "+ to[1]+" ']";
+        click(By.xpath(locatorTo));
+
+        /* String[] locatorFrom1 = dateFrom.split("/");
         int dayNumber = Integer.parseInt(locatorFrom1[1]);
         String locator = "//*[text()=' "+dayNumber+" ']";
         WebElement dayElement = wd.findElement(By.xpath(locator));
         dayElement.click();
-
-        //click (By.xpath("//*[text()=' 28 ']"));
-
-        String[] locatorFrom2 = dateTo.split("/");
+        pause(2000);
+        String[] locatorFrom  = dateTo.split("/");
         int dayNumber1 = Integer.parseInt(locatorFrom1[1]);
-        String locator1 = "//*[text()=' "+dayNumber+" ']";
-        WebElement dayElement1 = wd.findElement(By.xpath(locator));
-        dayElement1.click();
+        String locator1  = "//*[text()=' "+dayNumber+" ']";
+        WebElement dayElement1 = wd.findElement(By.xpath(locator1));
+        dayElement1.click();  */
+         }
 
 
-
-    }
 
     private void typeCity(String city) {
         type(By.id("city"),city);
         click(By.cssSelector("div.pac-item"));
     }
+    public boolean isListOfCarAppeared() {
+        return isElementPresent(By.cssSelector("a.car-container"));
+    }
+    public void searchCurrentYear(String city, String dateFrom, String dateTo) {
+        typeCity(city);
+        click(By.id("dates"));
+
+        LocalDate now =  LocalDate.now();
+        System.out.println(now);
+        int year= now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+        LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/d/yyyy"));
+        LocalDate to = LocalDate.parse(dateTo,DateTimeFormatter.ofPattern("M/d/yyyy"));
+
+        int diffMonth =from.getMonthValue()- month;
+        if(diffMonth>0){
+            clickNextMonthBtn(diffMonth);
+        }
+        click(By.xpath("//div[text()=' "+from.getDayOfMonth()+" ']"));
+
+        diffMonth=to.getMonthValue()-from.getMonthValue();
+        if(diffMonth>0){
+            clickNextMonthBtn(diffMonth);
+        }
+        // "//div[text()=' "+from[1]+" ']";
+        String locator = String.format("//div[text()=' %s ']",to.getDayOfMonth());
+        click(By.xpath(locator));
+
+    }
+    private void clickNextMonthBtn(int diffMonth) {
+        for (int i = 0; i < diffMonth; i++) {
+            click(By.cssSelector("button[aria-label='Next month']"));
+        }    }
+    public void searchAnyPeriod(String city, String dateFrom, String dateTo) {
+        typeCity(city);
+        click(By.id("dates"));
+
+        String[] from = dateFrom.split("/");
+        String locatorFrom = "//*[text()=' "+ from[1]+" ']";
+        click(By.xpath(locatorFrom));
+        pause(2000);
+
+       click(By.cssSelector(".mat-calendar-arrow"));
+
+        click(By.xpath("//div[text()= 2024]"));
+        pause(1000);
+
+
+        String[] to = dateTo.split( "/"); //*[text()=' MAR '] 3/28/24
+        String month = to[0];
+        String[] months = {"", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+        String FEB = months[Integer.parseInt(month)];
+        String locatorTo = "//div[text()=' "+FEB+" ']";
+        click(By.xpath(locatorTo));
+
+
+        String[] to1 = dateTo.split("/");
+        String locatorTo1 = "//*[text()=' "+to1[1]+" ']";
+        click(By.xpath(locatorTo1));
+
+
+    }
+
+    public void back() {
+        wd.navigate().back();
+    }
 }
+
+
+
+
+
+
