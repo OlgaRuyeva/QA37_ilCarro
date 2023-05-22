@@ -73,4 +73,21 @@ public class HelperBase {
             throw new RuntimeException(e);
         }
     }
+    public void clearTextBox(By locator){//очищаем строку от текста
+        WebElement element = wd.findElement(locator);
+        String os = System.getProperty("os.name");
+        System.out.println(os);
+        if (os.startsWith("Win")) {
+            element.sendKeys(Keys.CONTROL,"a");
+        }else{
+        element.sendKeys(Keys.COMMAND,"a");
+        }
+        element.sendKeys(Keys.DELETE);
+    }
+    public boolean isYallaButtonNotActive() {
+        boolean res = isElementPresent(By.cssSelector("button[disabled]"));
+        WebElement element = wd.findElement(By.cssSelector("button[type='submit']"));
+        boolean result = element.isEnabled();
+        return res && !result;
+    }
 }

@@ -26,16 +26,12 @@ public class User {
         this.password = password;
         return this;
     }
-
     public String getFirstName() {
         return firstName;
-
     }
-
     public String getLastName() {
         return lastName;
     }
-
     public String getEmail() {
         return email;
     }

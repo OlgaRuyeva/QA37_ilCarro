@@ -1,5 +1,6 @@
 package tests;
 
+import manager.DataProviderUser;
 import models.User;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -15,12 +16,11 @@ public class LoginTests extends TestBase {
         }
     }
 
-    @Test
-    public void loginSuccess1() {
+    @Test(dataProvider = "loginFile",dataProviderClass = DataProviderUser.class)
+    public void loginSuccess1(User user) {
         logger.info("Start test 'loginSuccess1'");
-        logger.info("Test data---> email: '00220719@gmail.com' & password:'OO220719!oo'");
-
-        User user = new User().setEmail("00220719@gmail.com").setPassword("OO220719!oo");
+        logger.info("Test data--->"+user.toString());
+        //User user = new User().setEmail("00220719@gmail.com").setPassword("OO220719!oo");
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm(user);
         app.getHelperUser().getScreen("src/test/screenshots/screen.png");
@@ -42,11 +42,11 @@ public class LoginTests extends TestBase {
         logger.info("Assert check is message 'Logged in success' present");
     }
 
-    @Test
-    public void loginSuccessModel() {
-        logger.info("Test data---> email: '00220719@gmail.com' & password:'OO220719!oo'");
+    @Test(dataProvider = "loginFile",dataProviderClass = DataProviderUser.class)
+    public void loginSuccessModel(User user) {
+        logger.info("Test data--->"+user.toString());
         app.getHelperUser().openLoginForm();
-        app.getHelperUser().fillLoginForm("oo220719@gmail.com", "OO220719!oo");
+        app.getHelperUser().fillLoginForm(user);
         app.getHelperUser().submit();
         Assert.assertEquals(app.getHelperUser().getMessage(), "Logged in success");
         logger.info("Assert check is message 'Logged in success' present");
